@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Portefeuille{% endblock %}
+
+{% block body %}
+<h1>Mon Portefeuille</h1>
+
+{# Affichage du solde #}
+<p><strong>Solde actuel :</strong> {{ balance }} €</p>
+
+{# Affichage des entrées du portefeuille #}
+<h2>Contenu du portefeuille</h2>
+{% if portfolioEntries|length > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <th>Cryptomonnaie</th>
+                <th>Quantité</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in portfolioEntries %}
+            <tr>
+                <td>{{ entry.cryptoCurrency.name }}</td>
+                <td>{{ entry.quantity }}</td>
+                <td>
+                    {# Exemple de bouton ou de lien pour vendre ou gérer cette entrée #}
+                    <a href="{{ path('portfolio_sell', {'id': entry.id}) }}">Vendre</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Vous n'avez actuellement aucune cryptomonnaie dans votre portefeuille.</p>
+{% endif %}
+{% endblock %}
