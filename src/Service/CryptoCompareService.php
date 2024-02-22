@@ -3,6 +3,7 @@ namespace App\Service;
 
 use GuzzleHttp\Client;
 
+
 class CryptoCompareService
 {
     private $apiKey;

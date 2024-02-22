@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 
 
 
+
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 class Member extends User
 {

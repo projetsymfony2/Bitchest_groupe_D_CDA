@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,21 +24,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
           // Ajoutez à votre classe User
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private $balance = 500.00; // Initialisez le solde avec 500 comme valeur par défaut
+    private $balance = 500.00; 
 
-    // Getter pour le solde 
+   
     public function getBalance(): ?string
     {
     return $this->balance;
     } 
 
-     // Setter pour le solde
+    
     public function setBalance(string $balance): self
     {
     $this->balance = $balance;
 
     return $this;
-    }
+}
 
     
 
@@ -60,14 +58,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $first_name = null;
-
-    #[ORM\OneToMany(targetEntity: Transaction::class, mappedBy: 'user')]
-    private Collection $transactions;
-
-    public function __construct()
-    {
-        $this->transactions = new ArrayCollection();
-    }
 
     // #[ORM\Column(length: 255)]
     // private ?string $last_name = null;
@@ -123,6 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
+        
         return $this->password;
     }
 
@@ -189,34 +180,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     //     return $this;
     // }
-
-    /**
-     * @return Collection<int, Transaction>
-     */
-    public function getTransactions(): Collection
-    {
-        return $this->transactions;
-    }
-
-    public function addTransaction(Transaction $transaction): static
-    {
-        if (!$this->transactions->contains($transaction)) {
-            $this->transactions->add($transaction);
-            $transaction->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTransaction(Transaction $transaction): static
-    {
-        if ($this->transactions->removeElement($transaction)) {
-            // set the owning side to null (unless already changed)
-            if ($transaction->getUser() === $this) {
-                $transaction->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }
